@@ -12,6 +12,7 @@ prepare: ./build/
 
 .PHONY: clean
 clean: prepare
+	rm -rf ./packaging/ && \
 	cd build && make clean
 
 .PHONY: build
@@ -48,3 +49,6 @@ tgz: prepare-tgz
 
 .PHONY: release
 release: clean deb tgz
+	mkdir -p ./dist/ && \
+	cp ./packaging/tgz/giduba-${VERSION}.tar.gz ./dist/ && \
+	cp ./packaging/deb/giduba-${VERSION}.deb ./dist/
