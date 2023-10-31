@@ -6,20 +6,22 @@
 #include <QTextStream>
 #include <QRegularExpression>
 #include <QLabel>
-//#include <QDirIterator>
-//#include <QDebug>
+#include <QSettings>
+#include <QFile>
+#include <QDebug>
 
 #include "ui_mainwindow.h"
 
 #define VERSION "0.1.0"
 #define APPNAME "Giduba"
-//XXX Put this in a config
+#define CONFIG_PATH QDir::homePath()+"/.config/giduba/"
+#define CONFIG_FILE_PATH CONFIG_PATH + "giduba.conf"
+
+static QSettings * settings;
+
 static bool is_saved = false;
 static bool is_wrap = true;
 static QString current_file = "";
-static qint64 max_file_size = 512*1024*1024;
-static QString max_size_megs = "512MB";
-
 static int line_count;
 static int word_count;
 static int char_count;
@@ -31,10 +33,10 @@ void updateStatus(Ui::MainWindow & main_ui){
     auto saved = is_saved ? "[ saved ]" : "[ not saved ]";
 
     auto statusText =
-        charCount+" chars | "+
-        wordCount+" words | "+
-        lineCount+" lines | "+
-        saved;
+    charCount+" chars | "+
+    wordCount+" words | "+
+    lineCount+" lines | "+
+    saved;
 
     main_ui.status->showMessage(statusText);
 }
@@ -53,10 +55,13 @@ void saveTxt(Ui::MainWindow & main_ui){
 void openTxt(QWidget & window, Ui::MainWindow & main_ui){
     assert(!current_file.isEmpty());
     QFile f(current_file);
+    auto max_file_size_mb = settings->value("max_file_size_mb", QVariant(512)).toInt();
+    auto max_file_size = max_file_size_mb * 1024 * 1024;
     if(f.size() >= max_file_size){
         auto size_megs = QString::number(f.size() / 1024.0*1024.0)+"MB";
-
-        QMessageBox::information(&window, "File too large", "The file has "+size_megs+" but the maximum is"+max_size_megs);
+        auto max_size_megs = QString::number(max_file_size_mb) + "MB";
+        QMessageBox::information(&window, "File too large",
+                                 "The file has "+size_megs+" but the maximum is"+max_size_megs);
     }else{
         f.open(QIODevice::ReadOnly);
         QByteArray text = f.read(max_file_size);
@@ -82,8 +87,23 @@ void setUpTextEditor(Ui::MainWindow & main_ui){
         main_ui.editor->setLineWrapMode(QTextEdit::NoWrap);
     }
 
-    main_ui.editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    main_ui.editor->setFontPointSize(12);
+    main_ui.editor->setVerticalScrollBarPolicy(
+        settings->value("always_show_bar", QVariant(true)).toBool()?
+        Qt::ScrollBarAlwaysOn : Qt::ScrollBarAsNeeded
+    );
+
+    if(is_wrap){
+        main_ui.editor->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    }else{
+        main_ui.editor->setHorizontalScrollBarPolicy(
+            settings->value("always_show_bar", QVariant(true)).toBool()?
+            Qt::ScrollBarAlwaysOn : Qt::ScrollBarAsNeeded
+    );
+
+    }
+    main_ui.editor->setFontPointSize(
+        settings->value("default_font_size", QVariant(12)).toInt()
+    );
 }
 
 void addFileActions(QWidget & window, Ui::MainWindow & main_ui){
@@ -166,13 +186,13 @@ void addEditActions(Ui::MainWindow & main_ui){
 
 static QString helpStr = "";
 static QString aboutStr =
-    QString(APPNAME) + "\n" +
-    "Version "+VERSION+"\n"+__DATE__"\n\n"+
-    "Licensed under the GNU Public License Version 3\n"+
-    "See LICENSE for details\n\n"+
-    "Built with:\n"+
-    "GCC " + __VERSION__+"\n"+
-    "QT "+QT_VERSION_STR;
+QString(APPNAME) + "\n" +
+"Version "+VERSION+"\n"+__DATE__"\n\n"+
+"Licensed under the GNU Public License Version 3\n"+
+"See LICENSE for details\n\n"+
+"Built with:\n"+
+"GCC " + __VERSION__+"\n"+
+"QT "+QT_VERSION_STR;
 
 void addHelpActions(QWidget & window, Ui::MainWindow & main_ui){
 
@@ -225,6 +245,20 @@ void setUpStatusEvents(Ui::MainWindow & main_ui){
 
 int main(int argc, char** argv)
 {
+    if (!QFile(CONFIG_FILE_PATH).exists()){
+        QDir().mkdir(CONFIG_PATH);
+        settings = new QSettings(CONFIG_FILE_PATH, QSettings::IniFormat);
+        settings->setValue("max_file_size_mb",QVariant(512));
+        settings->setValue("default_wrap",QVariant(true));
+        settings->setValue("default_font_size",QVariant(12));
+        settings->setValue("always_show_bar", QVariant(true));
+        settings->sync();
+    }
+
+    settings = new QSettings(CONFIG_FILE_PATH, QSettings::IniFormat);
+
+    is_wrap = settings->value("default_wrap", QVariant(true)).toBool();
+
     QApplication app(argc, argv);
 
     QMainWindow w;
