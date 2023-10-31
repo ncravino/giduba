@@ -24,7 +24,7 @@ Giduba is the sumerian word for writing utensils.
 - ~~Add configuration file~~
 - ~~Fix status bar focus bugs~~
 - Make sure icon works in KDE
-- Save window state (dimensions et al.)
+- ~~Save window state (dimensions et al.)~~
 - Add tests
 - Create .deb and .tar.gz releases
 

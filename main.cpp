@@ -16,6 +16,7 @@
 #define APPNAME "Giduba"
 #define CONFIG_PATH QDir::homePath()+"/.config/giduba/"
 #define CONFIG_FILE_PATH CONFIG_PATH + "giduba.conf"
+#define CONFIG_GEOM_FILE CONFIG_PATH + "giduba.geom"
 
 static QSettings * settings;
 
@@ -243,6 +244,23 @@ void setUpStatusEvents(Ui::MainWindow & main_ui){
     updateStatus(main_ui);
 }
 
+void saveGeom(QMainWindow & w){
+    auto state = w.saveGeometry();
+    QFile f(CONFIG_GEOM_FILE);
+    f.open(QIODevice::ReadWrite);
+    f.write(state);
+    f.close();
+
+}
+
+void loadGeom(QMainWindow & w){
+   QFile f(CONFIG_GEOM_FILE);
+    f.open(QIODevice::ReadOnly);
+    auto state = f.readAll();
+    f.close();
+    w.restoreGeometry(state);
+}
+
 int main(int argc, char** argv)
 {
     if (!QFile(CONFIG_FILE_PATH).exists()){
@@ -270,6 +288,11 @@ int main(int argc, char** argv)
     Ui::MainWindow main;
 
     main.setupUi(&w);
+
+    if (QFile(CONFIG_GEOM_FILE).exists()){
+        loadGeom(w);
+    }
+
     w.show();
 
     addFileActions(w, main);
@@ -279,5 +302,10 @@ int main(int argc, char** argv)
     setUpTextEditor(main);
     setUpStatusEvents(main);
 
-    return app.exec();
+    auto exit_code = app.exec();
+
+    saveGeom(w);
+
+    return exit_code;
+
 }
