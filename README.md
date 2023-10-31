@@ -18,10 +18,16 @@ Giduba is the sumerian word for writing utensils.
 - Word Wrapping
 - Fast and Small (~55KB)
 
-
 ## Todo
 
 - Add Search & Replace
+- Add configuration file
 - Fix status bar focus bugs
+- Save window state (dimensions et al.)
 - Add tests
 - Create .deb and .tar.gz releases
+
+## Screenshots
+
+![A screen shot of giduba in kde plasma](./images/screenshot.png)
+
