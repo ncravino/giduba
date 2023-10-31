@@ -6,6 +6,8 @@
 #include <QTextStream>
 #include <QRegularExpression>
 #include <QLabel>
+//#include <QDirIterator>
+//#include <QDebug>
 
 #include "ui_mainwindow.h"
 
@@ -73,15 +75,15 @@ void newTxt(Ui::MainWindow & main_ui){
     current_file="";
 }
 
-void setUpTextEditor(QMainWindow & w, Ui::MainWindow & main_ui){
+void setUpTextEditor(Ui::MainWindow & main_ui){
     if(is_wrap){
         main_ui.editor->setLineWrapMode(QTextEdit::WidgetWidth);
     }else{
         main_ui.editor->setLineWrapMode(QTextEdit::NoWrap);
     }
+
     main_ui.editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     main_ui.editor->setFontPointSize(12);
-    w.setWindowOpacity(0.9);
 }
 
 void addFileActions(QWidget & window, Ui::MainWindow & main_ui){
@@ -131,7 +133,7 @@ void addFileActions(QWidget & window, Ui::MainWindow & main_ui){
     });
 }
 
-void addEditActions(QMainWindow & w,Ui::MainWindow & main_ui){
+void addEditActions(Ui::MainWindow & main_ui){
     QObject::connect(main_ui.actionSelectAll, &QAction::triggered, [&]() {
         main_ui.editor->selectAll();
     });
@@ -158,7 +160,7 @@ void addEditActions(QMainWindow & w,Ui::MainWindow & main_ui){
 
     QObject::connect(main_ui.actionLineWrap, &QAction::triggered, [&]() {
         is_wrap = main_ui.actionLineWrap->isChecked();
-        setUpTextEditor(w,main_ui);
+        setUpTextEditor(main_ui);
     });
 }
 
@@ -182,9 +184,26 @@ void addHelpActions(QWidget & window, Ui::MainWindow & main_ui){
     });
 }
 
-void setUpStatusEvents(Ui::MainWindow & main_ui){
+// used to disable menu tooltips on the statusbar
+class StatusTipFilter : public QObject
+{
 
-    QObject::connect(main_ui.editor, &QTextEdit::cursorPositionChanged, [&]() {
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override
+    {
+        if (event->type() == QEvent::StatusTip)
+        {
+            return true;
+        }
+        return QObject::eventFilter(watched, event);
+    }
+};
+
+
+void setUpStatusEvents(Ui::MainWindow & main_ui){
+    // update status on text change
+    QObject::connect(main_ui.editor, &QTextEdit::textChanged, [&]() {
         is_saved = false;
 
         auto text = main_ui.editor->toPlainText();
@@ -197,6 +216,10 @@ void setUpStatusEvents(Ui::MainWindow & main_ui){
         updateStatus(main_ui);
 
     });
+
+    // disable menu tooltips on the statusbar
+    main_ui.menu->installEventFilter(new StatusTipFilter());
+
     updateStatus(main_ui);
 }
 
@@ -205,15 +228,21 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
 
     QMainWindow w;
+
+    //set icon
+    QIcon icon(":/icons/icon.ico");
+    app.setWindowIcon(icon);
+
     Ui::MainWindow main;
+
     main.setupUi(&w);
     w.show();
 
     addFileActions(w, main);
-    addEditActions(w, main);
+    addEditActions(main);
     addHelpActions(w, main);
 
-    setUpTextEditor(w,main);
+    setUpTextEditor(main);
     setUpStatusEvents(main);
 
     return app.exec();
