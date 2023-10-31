@@ -1,0 +1,6 @@
+Package: giduba
+Version: $VERSION
+Maintainer: Nuno Cravino
+Architecture: amd64
+Description: A lean, small, and simple Text Editor / Notepad Alternative for Linux
+Depends: libc6, libc6-dev, libgcc-s1, libqt5core5a, libqt5gui5, libqt5widgets5, libstdc++6
