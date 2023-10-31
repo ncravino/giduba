@@ -148,20 +148,11 @@
                 <property name="title">
                     <string>&amp;Help</string>
                 </property>
-                <action name="actionHelp">
-                    <property name="text">
-                        <string>Help</string>
-                    </property>
-                    <property name="shortcut">
-                        <string>F1</string>
-                    </property>
-                </action>
                 <action name="actionAbout">
                     <property name="text">
                         <string>About</string>
                     </property>
                 </action>
-                <addaction name="actionHelp"/>
                 <addaction name="actionAbout"/>
             </widget>
             <addaction name="menuFile"/>

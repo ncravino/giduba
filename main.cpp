@@ -184,23 +184,23 @@ void addEditActions(Ui::MainWindow & main_ui){
     });
 }
 
-static QString helpStr = "";
 static QString aboutStr =
-QString(APPNAME) + "\n" +
-"Version "+VERSION+"\n"+__DATE__"\n\n"+
-"Licensed under the GNU Public License Version 3\n"+
-"See LICENSE for details\n\n"+
-"Built with:\n"+
-"GCC " + __VERSION__+"\n"+
+"<h1>"+QString(APPNAME) + "</h1>" +
+"Version "+VERSION+"<br>"+__DATE__"<br><br>"+
+"<a href='https://github.com/ncravino/giduba'>https://github.com/ncravino/giduba</a><br><br>"+
+"Licensed under the GNU Public License Version 3<br>"+
+"See LICENSE for details<br><br>"+
+"Built with:<br>"+
+"GCC " + __VERSION__+"<br>"+
 "QT "+QT_VERSION_STR;
 
 void addHelpActions(QWidget & window, Ui::MainWindow & main_ui){
-
-    QObject::connect(main_ui.actionHelp, &QAction::triggered, [&]() {
-        QMessageBox::information(&window, "Help", helpStr);
-    });
     QObject::connect(main_ui.actionAbout, &QAction::triggered, [&]() {
-        QMessageBox::information(&window, "About",aboutStr);
+        QMessageBox msg(&window);
+        msg.setWindowTitle("About");
+        msg.setTextFormat(Qt::RichText);
+        msg.setText(aboutStr);
+        msg.exec();
     });
 }
 
