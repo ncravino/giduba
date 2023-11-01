@@ -13,6 +13,14 @@
         <property name="windowTitle">
             <string>Giduba</string>
         </property>
+        <property name="windowIcon">
+            <iconset resource="main.qrc">
+                <normaloff>:/icons/icon.svg</normaloff>
+                <normalon>:/icons/icon.svg</normalon>
+                <selectedon>:/icons/icon.svg</selectedon>
+                :/icons/icon.svg
+            </iconset>
+        </property>
         <widget class="QMenuBar" name="menu">
             <widget class="QMenu" name="menuFile">
                 <property name="title">
@@ -95,6 +103,30 @@
                         <string>Ctrl+A</string>
                     </property>
                 </action>
+                <action name="actionToggleSearch">
+                    <property name="text">
+                        <string>Toggle Search/Replace</string>
+                    </property>
+                    <property name="shortcut">
+                        <string>Ctrl+H</string>
+                    </property>
+                </action>
+                <action name="actionSearch">
+                    <property name="text">
+                        <string>Search</string>
+                    </property>
+                    <property name="shortcut">
+                        <string>Ctrl+F</string>
+                    </property>
+                </action>
+                <action name="actionReplace">
+                    <property name="text">
+                        <string>Replace</string>
+                    </property>
+                    <property name="shortcut">
+                        <string>Ctrl+R</string>
+                    </property>
+                </action>
                 <action name="actionCut">
                     <property name="text">
                         <string>Cut</string>
@@ -136,6 +168,9 @@
                 <addaction name="actionUndo"/>
                 <addaction name="actionRedo"/>
                 <addaction name="separator"/>
+                <addaction name="actionToggleSearch"/>
+                <addaction name="actionSearch"/>
+                <addaction name="actionReplace"/>
                 <addaction name="actionSelectAll"/>
                 <addaction name="separator"/>
                 <addaction name="actionCut"/>
@@ -152,6 +187,9 @@
                     <property name="text">
                         <string>About</string>
                     </property>
+                    <property name="shortcut">
+                        <string>F1</string>
+                    </property>
                 </action>
                 <addaction name="actionAbout"/>
             </widget>
@@ -159,8 +197,60 @@
             <addaction name="menuEdit"/>
             <addaction name="menuHelp"/>
         </widget>
-        <widget class="QTextEdit" name="editor"/>
-        <widget class="QStatusBar" name="status"/>
+        <widget class="QWidget" name="main">
+            <layout class="QVBoxLayout" name="verticalLayout">
+                <item>
+                    <widget class="QTextEdit" name="editor"/>
+                </item>
+                <item>
+                    <widget class ="QWidget" name="searchReplaceElement">
+                        <property name="visible">
+                            <bool>false</bool>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout">
+                            <item>
+                                <widget class="QLabel" name="searchLabel">
+                                    <property name="text">
+                                        <string>Search:</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <widget class="QLineEdit" name="searchBox"/>
+                            </item>
+                            <item>
+                                <widget class="QPushButton" name="searchButton">
+                                    <property name="text">
+                                        <string>Search</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <widget class="QLabel" name="replaceLabel">
+                                    <property name="text">
+                                        <string>Replace:</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <widget class="QLineEdit" name="replaceBox"/>
+                            </item>
+                            <item>
+                                <widget class="QPushButton" name="replaceButton">
+                                    <property name="text">
+                                        <string>Replace</string>
+                                    </property>
+                                </widget>
+                            </item>
+                        </layout>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QStatusBar" name="status"/>
+                </item>
+            </layout>
+        </widget>
+
     </widget>
     <resources/>
     <connections/>
