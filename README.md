@@ -16,18 +16,20 @@ Giduba is the sumerian word for writing utensils.
 - Write UTF8
 - Character, word, line counter
 - Word Wrapping
-- Fast and Small (<200KB)
+- Search and Replace
+- Fast and Small (<100KB)
+- .deb and .tar.gz releases
 
 ## Todo
 
-- Add Search & Replace
+- ~~Add Search & Replace~~
 - ~~Add configuration file~~
 - ~~Fix status bar focus bugs~~
 - Make sure icon works in KDE
 - ~~Save window state (dimensions et al.)~~
 - Refactor into multiple files
 - Add tests
-- Create .deb and .tar.gz releases
+- ~~Create .deb and .tar.gz releases~~
 
 ## Building
 

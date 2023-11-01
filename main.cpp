@@ -9,6 +9,7 @@
 #include <QSettings>
 #include <QFile>
 #include <QDebug>
+#include <QDirIterator>
 
 #include "ui_mainwindow.h"
 
@@ -23,6 +24,7 @@ static QSettings * settings;
 static bool is_saved = false;
 static bool is_wrap = true;
 static QString current_file = "";
+static int last_search_pos = 0;
 static int line_count;
 static int word_count;
 static int char_count;
@@ -205,6 +207,79 @@ void addHelpActions(QWidget & window, Ui::MainWindow & main_ui){
     });
 }
 
+void addSeachReplaceActions(QWidget & window, Ui::MainWindow & main_ui){
+    QObject::connect(main_ui.actionToggleSearch, &QAction::triggered, [&]() {
+        main_ui.searchReplaceElement->setVisible(!main_ui.searchReplaceElement->isVisible());
+        main_ui.searchBox->setFocus();
+    });
+
+    QObject::connect(main_ui.actionSearch, &QAction::triggered, [&]() {
+        if(!main_ui.searchReplaceElement->isVisible()){
+            main_ui.actionToggleSearch->trigger();
+            last_search_pos=0;
+        }else if(main_ui.searchBox->text().isEmpty()){
+            qDebug("empty");
+            last_search_pos=0;
+        }else{
+            auto searchTerm = main_ui.searchBox->text();
+            auto loc = main_ui.editor->document()->find(searchTerm, last_search_pos);
+            if(loc.position()>=0){
+                main_ui.editor->setTextCursor(loc);
+                main_ui.editor->setFocus();
+                last_search_pos = loc.position();
+            }else if(last_search_pos > 0){
+                last_search_pos=0;
+                main_ui.actionSearch->trigger();
+            }
+        }
+    });
+
+    QObject::connect(main_ui.actionReplace, &QAction::triggered, [&]() {
+        if(!main_ui.searchReplaceElement->isVisible()){
+            main_ui.actionToggleSearch->trigger();
+            last_search_pos=0;
+        }else if(main_ui.searchBox->text().isEmpty()){
+
+            last_search_pos=0;
+        }else{
+            auto searchTerm = main_ui.searchBox->text();
+            auto replaceText = main_ui.replaceBox->text();
+            auto loc = main_ui.editor->document()->find(searchTerm, last_search_pos-searchTerm.length());
+            if(loc.position()>=0){
+
+                loc.removeSelectedText();
+                loc.insertText(replaceText);
+                main_ui.editor->setTextCursor(loc);
+                main_ui.editor->setFocus();
+                last_search_pos = loc.position();
+
+            }else if(last_search_pos > 0){
+                last_search_pos=0;
+                main_ui.actionReplace->trigger();
+            }
+        }
+    });
+
+    QObject::connect(main_ui.searchButton, &QPushButton::clicked, [&]() {
+        main_ui.actionSearch->trigger();
+    });
+
+    QObject::connect(main_ui.replaceButton, &QPushButton::clicked, [&]() {
+        main_ui.actionReplace->trigger();
+    });
+
+
+    QObject::connect(main_ui.searchBox, &QLineEdit::returnPressed, [&]() {
+        main_ui.actionSearch->trigger();
+    });
+
+    QObject::connect(main_ui.replaceBox, &QLineEdit::returnPressed, [&]() {
+        main_ui.actionReplace->trigger();
+    });
+
+
+}
+
 // used to disable menu tooltips on the statusbar
 class StatusTipFilter : public QObject
 {
@@ -281,23 +356,27 @@ int main(int argc, char** argv)
 
     QMainWindow w;
 
-    //set icon
-    QIcon icon(":/icons/icon.ico");
-    app.setWindowIcon(icon);
-
     Ui::MainWindow main;
 
+
     main.setupUi(&w);
+
 
     if (QFile(CONFIG_GEOM_FILE).exists()){
         loadGeom(w);
     }
+
+    //QDirIterator it(":", QDirIterator::Subdirectories);
+    //while (it.hasNext()) {
+    //    qDebug() << it.next();
+    //}
 
     w.show();
 
     addFileActions(w, main);
     addEditActions(main);
     addHelpActions(w, main);
+    addSeachReplaceActions(w, main);
 
     setUpTextEditor(main);
     setUpStatusEvents(main);
