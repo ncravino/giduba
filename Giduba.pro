@@ -14,6 +14,6 @@ DESTDIR = build
 
 CONFIG += c++2a
 
-QMAKE_CXXFLAGS += -O3 -fdata-sections -ffunction-sections -flto
-QMAKE_LFLAGS += -Wl,--gc-sections -flto
+QMAKE_CXXFLAGS += -s -O3 -fdata-sections -ffunction-sections -flto
+QMAKE_LFLAGS += -s -Wl,--gc-sections -flto
 
