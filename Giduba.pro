@@ -2,9 +2,12 @@ TEMPLATE = app
 
 QT += widgets
 
-FORMS += mainwindow.ui
-SOURCES += main.cpp
-RESOURCES += main.qrc
+VERSION = "$$cat(VERSION)"
+DEFINES += VERSION=\\\"$$VERSION\\\"
+
+FORMS += src/main.ui
+SOURCES += src/main.cpp src/editor.cpp src/config.cpp
+RESOURCES += resources/main.qrc
 
 MOC_DIR = build
 OBJECTS_DIR = build
