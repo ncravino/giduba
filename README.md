@@ -1,10 +1,12 @@
 # Giduba
 
-![A notepad written in unknown cursive](./icons/icon.png)
+![A notepad written in unknown cursive](./resources/icons/icon.png)
 
 A lean, small, and simple text editor / notepad alternative in QT.
 
 The goal of this editor is to be a drop in replacement for MS Notepad in Linux, as a very simple and fast text editor.
+
+This code is licensed under the GNU Public License Version 3, see [LICENSE](./LICENSE) for details.
 
 This is not a code editor.
 
@@ -27,7 +29,7 @@ Giduba is the sumerian word for writing utensils.
 - ~~Fix status bar focus bugs~~
 - Make sure icon works in KDE
 - ~~Save window state (dimensions et al.)~~
-- Refactor into multiple files
+- ~~Refactor into multiple files~~
 - Add tests
 - ~~Create .deb and .tar.gz releases~~
 
@@ -79,4 +81,5 @@ Any missing key will be replaced by the default.
 ## Screenshots
 
 ![A screen shot of giduba in kde plasma](./images/screenshot.png)
+![A screen shot of giduba about box in kde plasma](./images/screenshot_about.png)
 
