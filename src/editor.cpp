@@ -173,7 +173,6 @@ void Editor::setup_search_replace(){
             auto loc = this->main->editor->document()->find(searchTerm, last_search_pos);
             if(loc.position()>=0){
                 this->main->editor->setTextCursor(loc);
-                this->main->editor->setFocus();
                 last_search_pos = loc.position();
             }else if(last_search_pos > 0){
                 last_search_pos=0;
@@ -192,13 +191,13 @@ void Editor::setup_search_replace(){
         }else{
             auto searchTerm = this->main->searchBox->text();
             auto replaceText = this->main->replaceBox->text();
-            auto loc = this->main->editor->document()->find(searchTerm, last_search_pos-searchTerm.length());
+            auto start_loc = last_search_pos>=searchTerm.length() ? last_search_pos-searchTerm.length() : 0;
+            auto loc = this->main->editor->document()->find(searchTerm, start_loc);
             if(loc.position()>=0){
 
                 loc.removeSelectedText();
                 loc.insertText(replaceText);
                 this->main->editor->setTextCursor(loc);
-                this->main->editor->setFocus();
                 last_search_pos = loc.position();
 
             }else if(last_search_pos > 0){
