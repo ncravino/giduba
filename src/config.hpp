@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONFIG_HPP
+#define CONFIG_HPP 1
 
 #include <QDir>
 #include <QSettings>
@@ -59,3 +60,5 @@ public:
     bool show_scroll_bars();
 
 };
+
+#endif

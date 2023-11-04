@@ -10,7 +10,7 @@ This code is licensed under the GNU Public License Version 3, see [LICENSE](./LI
 
 This is not a code editor.
 
-Giduba is the sumerian word for writing utensils.
+Giduba is the sumerian word for writing utensils, literally a reed that was cut and used to write cuneiform on a clay tablet.
 
 ## Features
 
@@ -20,6 +20,7 @@ Giduba is the sumerian word for writing utensils.
 - Word Wrapping
 - Search and Replace
 - Fast and Small (<100KB)
+- Open file via argument
 - .deb and .tar.gz releases
 
 ## Todo
@@ -27,10 +28,10 @@ Giduba is the sumerian word for writing utensils.
 - ~~Add Search & Replace~~
 - ~~Add configuration file~~
 - ~~Fix status bar focus bugs~~
-- Make sure icon works in KDE
+- ~~Make sure icon works in KDE~~
+- ~~Add command Line Options~~
 - ~~Save window state (dimensions et al.)~~
 - ~~Refactor into multiple files~~
-- Add tests
 - ~~Create .deb and .tar.gz releases~~
 
 ## Building

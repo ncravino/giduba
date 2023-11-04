@@ -1,0 +1,10 @@
+[Desktop Entry]
+MimeType=text/plain;inode/directory;
+Name=Giduba
+Comment=A lean, small, and simple text editor in QT
+Exec=Giduba %F
+Icon=/usr/share/icons/hicolor/scalable/apps/giduba.svg
+Type=Application
+Categories=Qt;Utility;TextEditor;
+Keywords=text;txt;editor;
+StartupNotify=true

@@ -4,7 +4,8 @@ default: build
 
 .PHONY: icon
 icon:
-	convert icons/icon.svg -define icon:auto-resize="256,128,96,64,48,32,16" icons/icon.ico
+	convert ./resources/icons/giduba.svg -define icon:auto-resize="256,128,96,64,48,32,16" ./resources/icons/giduba.ico
+	convert ./resources/icons/giduba.svg  -resize 32 ./resources/icons/giduba.png
 
 .PHONY: prepare
 prepare: ./build/
@@ -27,10 +28,14 @@ run:
 .PHONY: prepare-deb
 prepare-deb: build
 	rm -rf ./packaging/deb/ && \
-	mkdir -p ./packaging/deb/giduba/usr/local/bin && \
+	mkdir -p ./packaging/deb/giduba/usr/bin && \
+	mkdir -p ./packaging/deb/giduba//usr/share/applications && \
+	mkdir -p ./packaging/deb/giduba/usr/share/icons/hicolor/scalable/apps/ && \
 	mkdir -p ./packaging/deb/giduba/DEBIAN && \
-	VERSION=${VERSION} envsubst < ./templates/control > ./packaging/deb/giduba/DEBIAN/control && \
-	cp ./build/Giduba ./packaging/deb/giduba/usr/local/bin/
+	VERSION=${VERSION} envsubst < ./scripts/packaging//control > ./packaging/deb/giduba/DEBIAN/control && \
+	cp ./scripts/packaging//giduba.desktop ./packaging/deb/giduba/usr/share/applications/ && \
+	cp ./resources/icons/giduba.svg ./packaging/deb/giduba/usr/share/icons/hicolor/scalable/apps/ && \
+	cp ./build/Giduba ./packaging/deb/giduba/usr/bin/
 
 .PHONY: prepare-tgz
 prepare-tgz: build

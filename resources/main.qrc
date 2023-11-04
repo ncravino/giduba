@@ -1,6 +1,7 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource>
-        <file>icons/icon.svg</file>
+        <file>icons/giduba.svg</file>
+        <file>icons/giduba.png</file>
     </qresource>
 </RCC>
