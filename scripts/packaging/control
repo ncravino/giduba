@@ -1,4 +1,5 @@
 Package: giduba
+Section: editors
 Version: $VERSION
 Maintainer: Nuno Cravino
 Architecture: amd64
