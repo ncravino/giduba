@@ -1,7 +1,5 @@
 
-#include "defines.hpp"
 #include "editor.hpp"
-
 
 static inline void save_txt(Ui::MainWindow * main_ui, QString & current_file){
     assert(!current_file.isEmpty());
@@ -82,7 +80,7 @@ void Editor::setup_file_actions(){
                 this->main->actionSave->trigger();
             }
         }
-        this->window->close();
+        this->app->exit();
 
     });
 }
@@ -135,19 +133,30 @@ void Editor::update_status(){
 }
 
 static const QString aboutStr =
-"<h1>"+QString(APPNAME) + "</h1>" +
-"Version "+VERSION+"<br>"+__DATE__"<br><br>"+
-"<a href='https://github.com/ncravino/giduba'>https://github.com/ncravino/giduba</a><br><br>"+
-"Licensed under the GNU Public License Version 3<br>"+
-"See LICENSE for details<br><br>"+
-"Built with:<br>"+
-"GCC " + __VERSION__+"<br>"+
-"QT "+QT_VERSION_STR;
+    "<h1>"+QString(APPNAME) + "</h1>" +
+    "Version "+VERSION+"<br>"+__DATE__"<br><br>"+
+    "<a href='https://github.com/ncravino/giduba'>https://github.com/ncravino/giduba</a><br><br>"+
+    "Giduba Copyright (C) 2023 Nuno Cravino<br><br>"+
+    "This program is free software: you can redistribute it and/or modify "+
+    "it under the terms of the GNU General Public License as published by "+
+    "the Free Software Foundation, either version 3 of the License, or "+
+    "(at your option) any later version.<br><br>"+
+    "This program is distributed in the hope that it will be useful, "+
+    "but WITHOUT ANY WARRANTY; without even the implied warranty of "+
+    "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "+
+    "GNU General Public License for more details.<br><br>"+
+    "You should have received a copy of the GNU General Public License "+
+    "along with this program. If not, see <a href='https://www.gnu.org/licenses'>"+
+    "https://www.gnu.org/licenses</a>.<br><br>"+
+    "Built with:<br>"+
+    "GCC " + __VERSION__+"<br>"+
+    "QT "+QT_VERSION_STR;
 
 void Editor::setup_help_actions(){
     QObject::connect(this->main->actionAbout, &QAction::triggered, [&]() {
         QMessageBox msg(this->window);
-        msg.setIconPixmap(QIcon(":/icons/icon.svg").pixmap(100,100));
+        msg.setMinimumWidth(400);
+        msg.setIconPixmap(this->icon.pixmap(150,150));
         msg.setWindowTitle("About");
         msg.setTextFormat(Qt::RichText);
         msg.setText(aboutStr);
@@ -336,11 +345,44 @@ Editor::Editor(int argc, char ** argv){
         this->config->load();
 
         this->app = new QApplication (argc, argv);
-
         this->window = new QMainWindow();
         this->main = new Ui::MainWindow();
 
-        this->main = new Ui::MainWindow();
-        this->main->setupUi(window);
+        QApplication::setWindowIcon(this->icon);
+        QApplication::setDesktopFileName("giduba"); //needed for wayland et al to show icon in window
+
+        this->app->setApplicationVersion(QString(VERSION));
+        this->app->setApplicationDisplayName("Giduba");
+        this->app->setApplicationName("Giduba");
+        this->app->setQuitOnLastWindowClosed(true);
+
+        this->main->setupUi(this->window);
+
+        QCommandLineParser cmd;
+        auto version_opt = cmd.addVersionOption();
+        auto help_opt = cmd.addHelpOption();
+        cmd.addPositionalArgument("[filename]", "An optional filename to open");
+
+        if (!cmd.parse(this->app->arguments())){
+            std::fputs(qPrintable(cmd.errorText()+"\n") ,stderr);
+            cmd.showHelp(1);
+            //exit 1
+        }
+
+        if (cmd.isSet(version_opt)){
+            cmd.showVersion();
+            //exit 0
+        }
+
+        if (cmd.isSet(help_opt)){
+            cmd.showHelp();
+            //exit 0
+        }
+
+        auto  pos_args = cmd.positionalArguments();
+        if (!pos_args.isEmpty()){
+            this->current_file = pos_args.first();
+            open_txt(this->window, this->main, this->current_file, this->config);
+        }
 
 }

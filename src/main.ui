@@ -13,14 +13,6 @@
         <property name="windowTitle">
             <string>Giduba</string>
         </property>
-        <property name="windowIcon">
-            <iconset resource="main.qrc">
-                <normaloff>:/icons/icon.svg</normaloff>
-                <normalon>:/icons/icon.svg</normalon>
-                <selectedon>:/icons/icon.svg</selectedon>
-                :/icons/icon.svg
-            </iconset>
-        </property>
         <widget class="QMenuBar" name="menu">
             <widget class="QMenu" name="menuFile">
                 <property name="title">
