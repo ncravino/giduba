@@ -1,6 +1,5 @@
 # Giduba
-
-![A notepad written in unknown cursive](./resources/icons/icon.png)
+<img src="./resources/icons/giduba.svg" width="200" alt="A tablet with giduba written in cuneiform"/>
 
 A lean, small, and simple text editor / notepad alternative in QT.
 
@@ -14,6 +13,7 @@ Giduba is the sumerian word for writing utensils, literally a reed that was cut 
 
 ## Features
 
+- Configurable via `~/.config/giduba/`
 - Read unicode files
 - Write UTF8
 - Character, word, line counter
@@ -21,6 +21,7 @@ Giduba is the sumerian word for writing utensils, literally a reed that was cut 
 - Search and Replace
 - Fast and Small (<100KB)
 - Open file via argument
+- Save last window geometry
 - .deb and .tar.gz releases
 
 ## Todo
@@ -80,7 +81,7 @@ max_file_size_mb=512
 Any missing key will be replaced by the default.
 
 ## Screenshots
+<img src="./images/screenshot.png" width="600" alt="A screenshot of giduba main window"/>
+<img src="./images/screenshot_about.png" width="600" alt="A screenshot of giduba about box"/>
 
-![A screen shot of giduba in kde plasma](./images/screenshot.png)
-![A screen shot of giduba about box in kde plasma](./images/screenshot_about.png)
 
