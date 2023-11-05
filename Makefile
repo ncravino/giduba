@@ -59,3 +59,7 @@ release: clean deb tgz
 	mkdir -p ./dist/ && \
 	cp ./packaging/tgz/giduba-${VERSION}.tar.gz ./dist/ && \
 	cp ./packaging/deb/giduba-${VERSION}.deb ./dist/
+
+.PHONY: deb-install-build-depends
+deb-install-build-depends:
+	sudo apt update && sudo apt install make qt5-qmake qtbase5-dev build-essential
