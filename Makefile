@@ -7,9 +7,11 @@ icon:
 	convert ./resources/icons/giduba.svg -define icon:auto-resize="256,128,96,64,48,32,16" ./resources/icons/giduba.ico
 	convert ./resources/icons/giduba.svg  -resize 32 ./resources/icons/giduba.png
 
+./build/:
+	mkdir -p build && cd build && qmake ../Giduba.pro
+
 .PHONY: prepare
 prepare: ./build/
-	mkdir -p build && cd build && qmake ../Giduba.pro
 
 .PHONY: clean
 clean: prepare
