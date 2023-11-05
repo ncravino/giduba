@@ -62,13 +62,11 @@ jobs:
 
     - name: Setup
       run: |
-        sudo apt-get -y update
-        sudo apt-get install --no-install-recommends qt5-qmake qtbase5-dev qtbase5-dev-tools libc6 libc6-dev libgcc-s1 libqt5core5a libqt5gui5 libqt5widgets5 libstdc++6 
-
+        make deb-install-build-depends
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     # If this step fails, then you should remove it and run the build manually (see below)
-    # - name: Autobuild
-    #  uses: github/codeql-action/autobuild@v2
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
@@ -76,9 +74,9 @@ jobs:
     #   If the Autobuild fails above, remove it and uncomment the following three lines.
     #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
 
-    - run: |
-        echo "Run, Build Application using script"
-        make clean build
+    #- run: |
+    #    echo "Build Application"
+    #    make clean build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
