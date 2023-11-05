@@ -63,7 +63,7 @@ jobs:
     - name: Setup
       run: |
         sudo apt-get -y update
-        sudo apt-get install --no-install-recommends qt5-qmake libc6 libc6-dev libgcc-s1 libqt5core5a libqt5gui5 libqt5widgets5 libstdc++6
+        sudo apt-get install --no-install-recommends qt5-qmake qtbase5-dev qtbase5-dev-tools libc6 libc6-dev libgcc-s1 libqt5core5a libqt5gui5 libqt5widgets5 libstdc++6 
 
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     # If this step fails, then you should remove it and run the build manually (see below)
