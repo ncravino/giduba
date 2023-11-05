@@ -37,10 +37,12 @@ I'm working on testing under Mint and Kubuntu, ARM, and other operating systems 
 ## Building
 
 ### Requirements
-
-- qtwidgets >= 5.0
-- qmake
 - make 
+- qt5-qmake 
+- qtbase5-dev 
+- build-essential
+
+Under Debian based distributions use `make deb-install-build-depends`.
 
 ### Compiling Source
 
