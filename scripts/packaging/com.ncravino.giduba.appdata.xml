@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>com.ncravino.giduba</id>
+  <name>Giduba</name>
+  <summary>A small and fast text editor</summary>
+  <description>
+   <p>Giduba is a small and simple QT based text editor for quick text editing and manipulation tasks.</p>
+   <p>It provides:</p>
+   <ul>
+	<li>Unicode Support</li>
+	<li>Configurable via configuration file</li>
+	<li>Character, word, and line counter</li>
+	<li>Search and Replace</li>
+	<li>Word Wrapping</li>
+	<li>Remember last window geometry state</li>
+   </ul>
+  </description>
+  <content_rating type="oars-1.0"/>
+  <url type="homepage">https://github.com/ncravino/giduba</url>
+  <launchable type="desktop-id">com.ncravino.giduba.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license> 
+  <screenshots>
+    <screenshot type="default">
+      <caption>Giduba under KDE Plasma</caption>
+      <image>https://github.com/ncravino/giduba/blob/main/images/screenshot.png</image>
+    </screenshot>
+  </screenshots>
+
+  <provides>
+    <binary>Giduba</binary>
+  </provides>
+  <releases>
+    <release version="$VERSION" date="$DATE" />
+  </releases>
+  <developer_name>Nuno Cravino</developer_name>
+</component>
+
+
+

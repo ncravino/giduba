@@ -1,5 +1,6 @@
 [Desktop Entry]
 MimeType=text/plain;inode/directory;
+StartupWMClass=com.ncravino.giduba
 Name=Giduba
 Comment=A lean, small, and simple text editor in QT
 Exec=Giduba %F

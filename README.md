@@ -25,7 +25,8 @@ Giduba is the sumerian word for writing utensils, literally a reed that was cut 
 
 ## Installing
 
-You can find both .deb and .tar.gz releases in [https://github.com/ncravino/giduba/releases](https://github.com/ncravino/giduba/releases).
+You can find both .deb, AppImage, and .tar.gz releases in [https://github.com/ncravino/giduba/releases](https://github.com/ncravino/giduba/releases).
+
 To install a .deb, simply download it and run:
 - `sudo dpkg -i filename.deb`
 

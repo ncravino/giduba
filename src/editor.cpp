@@ -349,11 +349,11 @@ Editor::Editor(int argc, char ** argv){
         this->main = new Ui::MainWindow();
 
         QApplication::setWindowIcon(this->icon);
-        QApplication::setDesktopFileName("giduba"); //needed for wayland et al to show icon in window
+        QApplication::setDesktopFileName("com.ncravino.giduba"); //needed for wayland et al to show icon in window
 
         this->app->setApplicationVersion(QString(VERSION));
         this->app->setApplicationDisplayName("Giduba");
-        this->app->setApplicationName("Giduba");
+        this->app->setApplicationName("com.ncravino.giduba");
         this->app->setQuitOnLastWindowClosed(true);
 
         this->main->setupUi(this->window);
