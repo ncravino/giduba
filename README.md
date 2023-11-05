@@ -3,7 +3,7 @@
 
 A lean, small, and simple text editor / notepad alternative in QT.
 
-The goal of this editor is to be a drop in replacement for MS Notepad in Linux, as a very simple and fast text editor.
+The goal of this editor is to be a very simple and fast text editor for quick text editing tasks such as viewing/changing config files, paste buffering, etc.
 
 This code is licensed under the GNU Public License Version 3, see [LICENSE](./LICENSE) for details.
 
@@ -19,21 +19,20 @@ Giduba is the sumerian word for writing utensils, literally a reed that was cut 
 - Character, word, line counter
 - Word Wrapping
 - Search and Replace
-- Fast and Small (<100KB)
+- Fast and Small (around 80KB in x86_64)
 - Open file via argument
 - Save last window geometry
-- .deb and .tar.gz releases
 
-## Todo
+## Installing
 
-- ~~Add Search & Replace~~
-- ~~Add configuration file~~
-- ~~Fix status bar focus bugs~~
-- ~~Make sure icon works in KDE~~
-- ~~Add command Line Options~~
-- ~~Save window state (dimensions et al.)~~
-- ~~Refactor into multiple files~~
-- ~~Create .deb and .tar.gz releases~~
+You can find both .deb and .tar.gz releases in [https://github.com/ncravino/giduba/releases](https://github.com/ncravino/giduba/releases).
+To install a .deb, simply download it and run:
+- `sudo dpkg -i filename.deb`
+
+If you don't have all the dependencies just follow the instructions that dpkg prints.
+
+It has been tested in Debian 11 and 12, please let me know if you run into any issue.
+I'm working on testing under Mint and Kubuntu, ARM, and other operating systems (as long as QT is available there it should build).
 
 ## Building
 
@@ -48,12 +47,6 @@ Giduba is the sumerian word for writing utensils, literally a reed that was cut 
 - `make build`
 
 The binary will be under `./build/giduba`.
-
-### Testing 
-- `make run`
-
-### Installing
-WIP
 
 ## Configuration
 
