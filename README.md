@@ -61,17 +61,17 @@ The file will be created and filled with the default configuration on the first 
 
 ```
 [General]
-always_show_bar=true
-default_font_size=12
-default_wrap=true
+font_size=12
 max_file_size_mb=512
+show_scroll_bars=true
+wrap=true
 ```
 
 ### Configuration Keys
 
-- `always_show_bar`:  a boolean that defines whether or not to always show the scroll bars (note that the horizontal will be hidden if wrap is true).
-- `default_font_size`: an integer defining the default font size for the editor
-- `default_wrap`: a boolean defining wether or not to wrap text (acording to window dimensions)
+- `show_scroll_bars`:  a boolean that defines whether or not to always show the scroll bars (note that the horizontal will be hidden if wrap is true).
+- `font_size`: an integer defining the default font size for the editor
+- `wrap`: a boolean defining wether or not to wrap text (acording to window dimensions)
 - `max_file_size_mb`: an integer to limit on the maximum file size that can be opened. In megabytes.
 
 Any missing key will be replaced by the default.
