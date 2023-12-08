@@ -60,17 +60,20 @@ tgz: prepare-tgz
 .PHONY: prepare-appimage
 prepare-appimage: build
 	rm -rf ./packaging/appimage && \
-	mkdir -p ./packaging/appimage/AppDir/usr/bin/ && \
-	mkdir -p ./packaging/appimage/AppDir/usr/share/metainfo/ && \
+	mkdir -p ./packaging/appimage/AppDir/usr/bin && \
+	mkdir -p ./packaging/appimage/AppDir/usr/share/applications && \
+	mkdir -p ./packaging/appimage/AppDir/usr/share/metainfo && \
+	mkdir -p ./packaging/appimage/AppDir/usr/share/icons/hicolor/scalable/apps/ && \
 	VERSION=${VERSION} DATE=${DATE} envsubst < ./scripts/packaging/com.ncravino.giduba.appdata.xml > ./packaging/appimage/AppDir/usr/share/metainfo/com.ncravino.giduba.appdata.xml && \
-	cp ./scripts/packaging/com.ncravino.giduba.desktop ./packaging/appimage/ && \
-	cp ./resources/icons/giduba.svg ./packaging/appimage && \
+	cp ./scripts/packaging/com.ncravino.giduba.desktop ./packaging/appimage/AppDir/usr/share/applications/ && \
+	cp ./resources/icons/giduba.svg ./packaging/appimage/AppDir/usr/share/icons/hicolor/scalable/apps/ && \
 	cp ./build/Giduba ./packaging/appimage/AppDir/usr/bin/
+
+
 
 .PHONY: appimage
 appimage: prepare-appimage
-	cd ./packaging/appimage/ && \
-	linuxdeploy-x86_64.AppImage --appdir AppDir -d ./com.ncravino.giduba.desktop -i ./giduba.svg --output appimage
+	./linuxdeployqt-continuous-x86_64.AppImage ./packaging/appimage/AppDir/usr/share/applications/com.ncravino.giduba.desktop -verbose=2 -appimage
 
 
 
@@ -79,9 +82,15 @@ release: clean deb tgz appimage
 	mkdir -p ./dist/ && \
 	cp ./packaging/tgz/giduba-${VERSION}.tar.gz ./dist/ && \
 	cp ./packaging/deb/giduba-${VERSION}.deb ./dist/ && \
-	cp ./packaging/appimage/Giduba-x86_64.AppImage ./dist/
+	cp Giduba-x86_64.AppImage ./dist/Giduba-x86_64-${VERSION}.AppImage
+
 
 .PHONY: deb-install-build-depends
 deb-install-build-depends:
-	sudo apt update && sudo apt install make qt5-qmake qtbase5-dev build-essential
+	sudo apt update && sudo apt install make qt5-qmake qtbase5-dev build-essential gettext file podman
 
+
+
+.PHONY: docker-env
+docker-env:
+	podman run -v $PWD:/giduba/ -it docker.io/library/ubuntu:focal bash
