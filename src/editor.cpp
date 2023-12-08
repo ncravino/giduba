@@ -1,6 +1,12 @@
 
 #include "editor.hpp"
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+#define SKIPEMPTYPARTS Qt::SkipEmptyParts
+#else
+#define SKIPEMPTYPARTS QString::SkipEmptyParts
+#endif
+
 static inline void save_txt(Ui::MainWindow * main_ui, QString & current_file){
     assert(!current_file.isEmpty());
     QFile f(current_file);
@@ -258,7 +264,7 @@ void Editor::setup_status_events(){
         auto text = this->main->editor->toPlainText();
         const QRegularExpression word_delim_regex = QRegularExpression("\\s+");
 
-        word_count = text.split(word_delim_regex, Qt::SkipEmptyParts).count();
+        word_count = text.split(word_delim_regex, SKIPEMPTYPARTS).count();
         line_count = this->main->editor->document()->lineCount();
         char_count = this->main->editor->document()->characterCount();
 
@@ -348,6 +354,7 @@ Editor::Editor(int argc, char ** argv){
         this->window = new QMainWindow();
         this->main = new Ui::MainWindow();
 
+        this->app->setWindowIcon(this->icon);
         QApplication::setWindowIcon(this->icon);
         QApplication::setDesktopFileName("com.ncravino.giduba"); //needed for wayland et al to show icon in window
 
