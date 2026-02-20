@@ -19,21 +19,13 @@ Giduba is the sumerian word for writing utensils, literally a reed that was cut 
 - Character, word, line counter
 - Word Wrapping
 - Search and Replace
-- Fast and Small (around 80KB in x86_64)
+- Fast and Small (around 115KB in x86_64)
 - Open file via argument
 - Save last window geometry
 
 ## Installing
 
-You can find both .deb, AppImage, and .tar.gz releases in [https://github.com/ncravino/giduba/releases](https://github.com/ncravino/giduba/releases).
-
-To install a .deb, simply download it and run:
-- `sudo dpkg -i filename.deb`
-
-If you don't have all the dependencies just follow the instructions that dpkg prints.
-
-It has been tested in Debian 11 and 12, please let me know if you run into any issue.
-I'm working on testing under Mint and Kubuntu, ARM, and other operating systems (as long as QT is available there it should build).
+Flatpak coming...
 
 ## Building
 
@@ -79,5 +71,3 @@ Any missing key will be replaced by the default.
 ## Screenshots
 <img src="./images/screenshot.png" width="600" alt="A screenshot of giduba main window"/>
 <img src="./images/screenshot_about.png" width="600" alt="A screenshot of giduba about box"/>
-
-
