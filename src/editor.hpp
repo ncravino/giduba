@@ -38,9 +38,9 @@ class Editor{
 
 private:
     int last_search_pos = 0;
-    int line_count;
-    int word_count;
-    int char_count;
+    int line_count=0;
+    int word_count=0;
+    int char_count=0;
     QString current_file = "";
     bool is_saved = false;
     bool is_wrap = true;
