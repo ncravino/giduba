@@ -1,11 +1,7 @@
 
 #include "editor.hpp"
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
 #define SKIPEMPTYPARTS Qt::SkipEmptyParts
-#else
-#define SKIPEMPTYPARTS QString::SkipEmptyParts
-#endif
 
 static inline void save_txt(Ui::MainWindow * main_ui, QString & current_file){
     assert(!current_file.isEmpty());
@@ -69,8 +65,8 @@ void Editor::setup_file_actions(){
 
     QObject::connect(this->main->actionNew, &QAction::triggered, [&]() {
         if (! this->is_saved) {
-            int response = QMessageBox::question(this->window, "Unsaved Changes", "Do you want to save your changes?","Yes", "No");
-            if (response == 0){ //yes
+            int response = QMessageBox::question(this->window, "Unsaved Changes", "Do you want to save your changes?", QMessageBox::Yes | QMessageBox::No);
+            if (response == QMessageBox::Yes){ //yes
                 this->main->actionSave->trigger();
             }
         }
@@ -81,8 +77,8 @@ void Editor::setup_file_actions(){
 
     QObject::connect(this->main->actionExit, &QAction::triggered, [&]() {
         if (! this->is_saved) {
-            int response = QMessageBox::question(this->window, "Unsaved Changes", "Do you want to save your changes?","Yes", "No");
-            if (response == 0){ //yes
+            int response = QMessageBox::question(this->window, "Unsaved Changes", "Do you want to save your changes?", QMessageBox::Yes | QMessageBox::No);
+            if (response == QMessageBox::Yes){ //yes
                 this->main->actionSave->trigger();
             }
         }
@@ -319,7 +315,7 @@ void Editor::setup_editor(){
     }
 
     this->main->editor->setFontPointSize(
-        this->config->font_size()
+        static_cast<float>(this->config->font_size())
     );
 
 }
@@ -356,7 +352,7 @@ Editor::Editor(int argc, char ** argv){
 
         this->app->setWindowIcon(this->icon);
         QApplication::setWindowIcon(this->icon);
-        QApplication::setDesktopFileName("com.ncravino.giduba"); //needed for wayland et al to show icon in window
+        // QApplication::setDesktopFileName removed in Qt6 - icon set via setWindowIcon
 
         this->app->setApplicationVersion(QString(VERSION));
         this->app->setApplicationDisplayName("Giduba");
