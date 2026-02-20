@@ -1,0 +1,33 @@
+{
+  "app-id": "org.ncravino.giduba",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "6.10",
+  "sdk": "org.kde.Sdk",
+  "command": "Giduba",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=wayland",
+    "--socket=x11",
+    "--filesystem=host"
+  ],
+  "modules": [
+    {
+      "name": "Giduba",
+      "buildsystem": "simple",
+      "build-commands": [
+        "qmake6 Giduba.pro",
+        "make -j$(nproc)",
+        "install -Dm755 build/Giduba /app/bin/Giduba",
+        "install -Dm644 org.ncravino.giduba.desktop /app/share/applications/org.ncravino.giduba.desktop",
+        "install -Dm644 org.ncravino.giduba.metainfo.xml /app/share/metainfo/org.ncravino.giduba.metainfo.xml",
+        "install -Dm644 resources/icons/giduba.svg /app/share/icons/hicolor/scalable/apps/org.ncravino.giduba.svg"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "."
+        }
+      ]
+    }
+  ]
+}

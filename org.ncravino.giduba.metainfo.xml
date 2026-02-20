@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>org.ncravino.giduba</id>
+  <launchable type="desktop-id">org.ncravino.giduba.desktop</launchable>
+
+  <name>Giduba</name>
+  <summary>A lean, small, and simple text editor</summary>
+  <description>
+    <p>Giduba is a lean, small, and simple text editor/notepad alternative in QT.</p>
+    <p>The goal of this editor is to be a very simple and fast text editor for quick text editing tasks such as viewing/changing config files, paste buffering, etc.</p>
+  </description>
+
+  <metadata_license>CC0-1.0</metadata_license>
+
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <url type="homepage">https://github.com/ncravino/giduba</url>
+  <url type="bugtracker">https://github.com/ncravino/giduba/issues</url>
+
+  <developer>
+    <name>Nicolas Cravino</name>
+  </developer>
+
+  <releases>
+    <release version="2.0.0" date="2024-02-20">
+      <description>
+        <p>Version 2.0.0 - Updated to Qt6</p>
+      </description>
+    </release>
+  </releases>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/ncravino/giduba/main/images/screenshot.png</image>
+      <caption>Main window of Giduba text editor</caption>
+    </screenshot>
+  </screenshots>
+
+  <keywords>
+    <keyword>text</keyword>
+    <keyword>editor</keyword>
+    <keyword>notepad</keyword>
+    <keyword>simple</keyword>
+    <keyword>lightweight</keyword>
+  </keywords>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="violence-drugs">none</content_attribute>
+    <content_attribute id="violence-swimming">none</content_attribute>
+    <content_attribute id="violence-language">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-violence">none</content_attribute>
+    <content_attribute id="sex-drugs">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+    <content_attribute id="money-poverty">none</content_attribute>
+    <content_attribute id="money-crime">none</content_attribute>
+    <content_attribute id="money-drugs">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-video">none</content_attribute>
+    <content_attribute id="social-sharing">none</content_attribute>
+    <content_attribute id="social location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="social-identity">none</content_attribute>
+    <content_attribute id="social-sexuality">none</content_attribute>
+    <content_attribute id="social-alcohol">none</content_attribute>
+    <content_attribute id="social-tobacco">none</content_attribute>
+    <content_attribute id="social-drugs">none</content_attribute>
+    <content_attribute id="social-gambling">none</content_attribute>
+    <content_attribute id="social-hints">none</content_attribute>
+    <content_attribute id="freedom-expression-identity">none</content_attribute>
+    <content_attribute id="freedom-expression-online">none</content_attribute>
+    <content_attribute id="freedom-expression-political">none</content_attribute>
+    <content_attribute id="freedom-expression-religion">none</content_attribute>
+    <content_attribute id="freedom-expression-sexuality">none</content_attribute>
+    <content_attribute id="freedom-expression-social">none</content_attribute>
+    <content_attribute id="freedom-expression-language">none</content_attribute>
+    <content_attribute id="freedom-expression-artistic">none</content_attribute>
+    <content_attribute id="freedom-expression-violence">none</content_attribute>
+    <content_attribute id="freedom-expression-swimming">none</content_attribute>
+  </content_rating>
+</component>

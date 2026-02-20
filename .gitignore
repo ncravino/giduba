@@ -3,3 +3,5 @@ build/
 .qmake.stash
 packaging/*
 dist/*
+flatpak-build/
+repo/
