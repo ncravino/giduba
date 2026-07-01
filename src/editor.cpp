@@ -1,5 +1,6 @@
 
 #include "editor.hpp"
+#include <QFileInfo>
 
 #define SKIPEMPTYPARTS Qt::SkipEmptyParts
 
@@ -33,13 +34,21 @@ static inline void open_txt(QWidget * window, Ui::MainWindow * main_ui, QString 
 }
 
 void Editor::setup_file_actions(){
-        QObject::connect(this->main->actionSaveAs, &QAction::triggered, [&]() {
-        QString filePath = QFileDialog::getSaveFileName(this->window, "Save File", QDir::homePath());
-        if (!filePath.isEmpty()) {
-            this->current_file = filePath;
-            save_txt(this->main, current_file);
-            this->is_saved = true;
-            this->update_status();
+        QObject::connect(this->main->actionSaveAs, &QAction::triggered, [this]() {
+        if (this->config) {
+            QString lastFolder = this->config->last_opened_folder();
+            QString startPath = lastFolder.isEmpty() ? QDir::homePath() : lastFolder;
+            QString filePath = QFileDialog::getSaveFileName(this->window, "Save File", startPath);
+            if (!filePath.isEmpty()) {
+                this->current_file = filePath;
+                save_txt(this->main, current_file);
+                this->is_saved = true;
+                this->update_status();
+                // Update last opened folder to the directory of the saved file
+                QFileInfo fileInfo(filePath);
+                this->config->set_last_opened_folder(fileInfo.absolutePath());
+                this->config->save();
+            }
         }
     });
 
@@ -53,13 +62,21 @@ void Editor::setup_file_actions(){
         }
     });
 
-    QObject::connect(this->main->actionOpen, &QAction::triggered, [&]() {
-        QString filePath = QFileDialog::getOpenFileName(this->window, "Open File", QDir::homePath());
-        if (!filePath.isEmpty()) {
-            this->current_file = filePath;
-            open_txt(this->window, this->main, this->current_file, this->config);
-            this->is_saved = true;
-            this->update_status();
+    QObject::connect(this->main->actionOpen, &QAction::triggered, [this]() {
+        if (this->config) {
+            QString lastFolder = this->config->last_opened_folder();
+            QString startPath = lastFolder.isEmpty() ? QDir::homePath() : lastFolder;
+            QString filePath = QFileDialog::getOpenFileName(this->window, "Open File", startPath);
+            if (!filePath.isEmpty()) {
+                this->current_file = filePath;
+                open_txt(this->window, this->main, this->current_file, this->config);
+                this->is_saved = true;
+                this->update_status();
+                // Update last opened folder to the directory of the opened file
+                QFileInfo fileInfo(filePath);
+                this->config->set_last_opened_folder(fileInfo.absolutePath());
+                this->config->save();
+            }
         }
     });
 
@@ -386,6 +403,10 @@ Editor::Editor(int argc, char ** argv){
         if (!pos_args.isEmpty()){
             this->current_file = pos_args.first();
             open_txt(this->window, this->main, this->current_file, this->config);
+            // Update last opened folder to the directory of the opened file
+            QFileInfo fileInfo(this->current_file);
+            this->config->set_last_opened_folder(fileInfo.absolutePath());
+            this->config->save();
         }
 
 }

@@ -6,6 +6,7 @@
 #define DEFAULT_FILE_MB 512
 #define DEFAULT_FONT_SIZE 12
 #define DEFAULT_SCROLL true
+#define DEFAULT_LAST_OPENED_FOLDER ""
 
 void Config::load(){
 
@@ -21,6 +22,7 @@ void Config::load(){
         this->settings->setValue("wrap",QVariant(DEFAULT_WRAP));
         this->settings->setValue("font_size",QVariant(DEFAULT_FONT_SIZE));
         this->settings->setValue("show_scroll_bars", QVariant(DEFAULT_SCROLL));
+        this->settings->setValue("last_opened_folder", QVariant(DEFAULT_LAST_OPENED_FOLDER));
         this->settings->sync();
     }else{
         this->settings = new QSettings(CONFIG_FILE_PATH, QSettings::IniFormat);
@@ -46,6 +48,14 @@ int Config::font_size(){
 
 bool Config::show_scroll_bars(){
     return this->settings->value("show_scroll_bars",QVariant(DEFAULT_SCROLL)).toBool();
+}
+
+QString Config::last_opened_folder(){
+    return this->settings->value("last_opened_folder", QVariant(DEFAULT_LAST_OPENED_FOLDER)).toString();
+}
+
+void Config::set_last_opened_folder(QString path){
+    this->settings->setValue("last_opened_folder", QVariant(path));
 }
 
 void Config::save(){

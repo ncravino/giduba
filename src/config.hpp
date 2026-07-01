@@ -59,6 +59,16 @@ public:
     */
     bool show_scroll_bars();
 
+    /*!
+    * The last opened folder path
+    */
+    QString last_opened_folder();
+
+    /*!
+    * Set the last opened folder path
+    */
+    void set_last_opened_folder(QString path);
+
 };
 
 #endif
